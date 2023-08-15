@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+    
+  .logo img {
+    width: 100px; 
+  }
+  
+  .signup-form,
+  .login-form {
+    border: 1px solid #ccc;
+    padding: 50px;
+    /*margin-top: 20px; */
+    width: 100vh;
+    height: 100vh;
+    background-color: #213f5e;
+    color: #f8f9fb;
+  }
+
+  .signup-form input,
+  .login-form input {
+    width: 350px;
+    padding-left: 8px;
+    background-color: #213f5e;
+    color: #f8f9fb;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+  }
+  .signup-form input::placeholder,
+  .login-form input::placeholder {
+    color: #f8f9fb;
+  }
+ 
+  .signup-form h2,
+  .login-form h2 {
+    font-size: 1.5rem;
+  }
+  
+  .alternative-signup {
+    margin-top: 10px;
+    color: #007bff;
+    cursor: pointer;
+  }
+
+  .account-link p {
+    margin-bottom: 0; 
+  }
+  
+  .account-link a {
+    margin-left: 10px; 
+  }
+
