@@ -5,7 +5,7 @@ import "chart.js/auto"
 
 const FDDChart = ({fddData}) =>{
     const chartData= {
-        label:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        label:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets:[
         {
             label: 'Freezing Degree Days',
@@ -22,8 +22,8 @@ const chartOptions = {
     maintainAspectRatio: false,
     scales:{
         x: {
-            type: 'category', // This specifies the x-axis as a category scale
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            type: 'category', 
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           },
         y:[
             {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import L from 'leaflet';
-// import { MapContainer, GeoJSON } from 'react-leaflet';
+import { BrowserRouter as Link } from 'react-router-dom';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import FDDChart from './FDDChart';
 import IceChart from './IceChart';
 import CountryMap from './CountryMap';
+// import Home from './Home';
 
 class MapComponent extends Component {
   constructor(props) {
@@ -183,7 +184,8 @@ class MapComponent extends Component {
       </Row>
       <Row className="justify-content">
         <Col xs="1">
-          <div style={{ height: '100%', border: '1px solid #ccc',  backgroundColor: 'white' }}></div>
+          <div style={{ height: '100%', border: '1px solid #ccc',  backgroundColor: 'white' }}>
+          </div>
         </Col>
         <Col xs="3">
           <div style={{ height: '100%',border: '1px solid #ccc' }}>
