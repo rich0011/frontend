@@ -4,6 +4,7 @@ import SignupForm from "./components/SignupForm";
 import LoginForm from "./components/LoginForm";
 import Home from './components/Home';
 import Statistics from './components/WeatherStatistics';
+import RouteStatistics from './components/RouteStatistics';
 import './components/LoginForm.css';
 
 
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/statistics" element={<Statistics />} />
+                <Route path="/route" element={<RouteStatistics />} />
             </Routes>
         </Router>
     // </div>

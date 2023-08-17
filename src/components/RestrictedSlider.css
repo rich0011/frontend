@@ -1,0 +1,54 @@
+:root {
+  --main-color: white;
+  /* --main-color-hover: rgb(104, 117, 217, 0.2); */
+  --track-color: #aaaaaa;
+/* Default mark color*/
+  --mark-color: #aaaaaa;
+}
+.customSlider {
+  max-width: 300px;
+  margin: auto;
+}
+
+.customSlider-track {
+  top: 8px;
+  height: 4px;
+  background: var(--track-color);
+}
+
+.customSlider-track.customSlider-track-0 {
+  background: #aaaaaa;;
+}
+
+.customSlider-thumb {
+  cursor: pointer;
+  /*color for the thumb */
+  background: var(--main-color);
+  /* shape of the thumb: circle */
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 6px solid #2cabe1;
+  /* remove default outline when selected */
+  /* outline: none; */
+}
+
+/* .customSlider-thumb:hover {
+  box-shadow: 0 0 0 8px var(--main-color-hover);
+} */
+
+.customSlider-mark {
+  cursor: pointer;
+  top: 6px;
+  width: 1.5px;
+  height: 8px;
+  background-color: #aaaaaa;
+}
+
+.customSlider-mark.customSlider-mark-before {
+  background-color: #aaaaaa;
+}
+
+.customSlider-mark.customSlider-mark-active {
+  display: none;
+}

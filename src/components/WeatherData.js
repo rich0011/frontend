@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import L from 'leaflet';
-import { BrowserRouter as Link } from 'react-router-dom';
+// import { BrowserRouter as Link } from 'react-router-dom';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
@@ -149,7 +149,7 @@ class MapComponent extends Component {
     const fddData = [15, 20, 10, 5, 8, 12, 18,23,13,33,21,22];
 
     return (
-      <Container style={{width: '100%', height: '100vh', backgroundColor: '#ccc' }}>
+      <Container style={{width: '100%', height: '100vh', backgroundColor: '#eeeeee' }}>
         <Row>
           <Col>
             <div style={{border: '1px solid #ccc', backgroundColor: 'white' }}>Hello Jan</div>

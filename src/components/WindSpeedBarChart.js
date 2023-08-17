@@ -18,6 +18,12 @@ const WindSpeedBarChart = ({windData}) =>{
     };
     const chartOptions ={
         maintainAspectRatio: false,
+        responsive: true,
+        plugins: {
+        legend: {
+          display: false, 
+        },
+      },
         scales:{
             x: {
                 type: 'category', 
