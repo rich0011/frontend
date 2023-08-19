@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Form, FormGroup, Input, Button } from 'reactstrap';
+import { Row, Col, Form, FormGroup, Button } from 'reactstrap';
+import Box from '@mui/material/Box';
+import { TextField, InputAdornment, IconButton, Snackbar } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 import background from './background.png';
+import Logo from './Logo';
 
 const LoginForm = () => {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [successMessage, setSuccessMessage] = React.useState('');
+  const [errorMessage, setErrorMessage] = React.useState('');
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,55 +28,148 @@ const LoginForm = () => {
         email,
         password,
       });
-      console.log(response.data);
-      navigate('/home');
+      if (response.data) {
+        // setSuccessMessage('Account created successfully!');
+        setErrorMessage('');
+        navigate('/home');
+      }
     } catch (error) {
-      console.error(error); 
+      setErrorMessage('Login failed. Please check your credentials.');
+      setSuccessMessage('');
     }
   };
 
+  const handleSnackbarClose = () => {
+    setSuccessMessage('');
+    setErrorMessage('');
+  };
+
   return (
-    <Container>
-      <Row className="justify-content">
-        <Col xs="4">
+    <Box sx={{ display: 'flex' }}>
+      <Row gutter={false}>
+        <Col xs="5">
           <Form className="login-form" onSubmit={handleLogin}>
-            <h2>Already have an account?</h2>
+          <Logo />
+            <h5 style={{ color: '#3bb3c2', fontSize:18, padding: '0 55px'}}>POLARCTIC</h5>
+            <h2 style={{ fontSize:12 }}>Already have an account?</h2>
             <FormGroup>
-            <Input
+              <TextField
                 type="text"
-                placeholder="Username"
+                label="Username"
+                variant="outlined"
+                size="small"
+                sx={{
+                  "& .MuiInputLabel-root": {color: 'white', fontFamily: 'Nunito'},
+                  "& .MuiOutlinedInput-root": {
+                    "& > fieldset": { borderColor: "white" },
+                  },
+                  "& .MuiOutlinedInput-root:hover": {
+                    "& > fieldset": {
+                      borderColor: "white"
+                    }
+                  },
+                }}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                InputLabelProps={{
+                  style: { color: 'white', backgroundColor: '#242442'},
+                }}
+                InputProps={{
+                  style: { color: 'white'},
+                }}
+                fullWidth
               />
             </FormGroup>
             <FormGroup>
-            <Input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+              <TextField
+                type="email"
+                label="Email"
+                variant="outlined"
+                size="small"
+                sx={{
+                  "& .MuiInputLabel-root": {color: 'white', fontFamily: 'Nunito'},
+                  "& .MuiOutlinedInput-root": {
+                    "& > fieldset": { borderColor: "white" },
+                  },
+                  "& .MuiOutlinedInput-root:hover": {
+                    "& > fieldset": {
+                      borderColor: "white"
+                    }
+                  },
+                }}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                InputLabelProps={{
+                  style: { color: 'white', backgroundColor: '#242442'},
+                }}
+                InputProps={{
+                  style: { color: 'white'},
+                }}
+                fullWidth
+              />
             </FormGroup>
             <FormGroup>
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+              <TextField
+                type={showPassword ? 'text' : 'password'}
+                label="Password"
+                variant="outlined"
+                size="small"
+                value={password}
+                sx={{
+                "& .MuiInputLabel-root": { color: 'white', fontFamily: 'Nunito'},
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": { borderColor: "white" },
+                  "&:hover fieldset": { borderColor: "white" },
+                },
+              }}
+                onChange={(e) => setPassword(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        edge="end"
+                        style={{ color: 'white' }}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                  style: { color: 'white'},
+                }}
+                InputLabelProps={{
+                  style: { color: 'white', backgroundColor: '#242442' },
+                }}
+                fullWidth
+              />
             </FormGroup>
             <FormGroup>
-            <Button type="submit" color="primary">Login</Button>
+              <Button type="submit" color="primary" fullWidth>
+                Login
+              </Button>
             </FormGroup>
+            <Snackbar
+                open={!!successMessage || !!errorMessage}
+                autoHideDuration={30000}
+                onClose={handleSnackbarClose}
+                message={successMessage || errorMessage}
+                ContentProps={{
+                  sx: {
+                    color: successMessage ? '#99ffbb' : errorMessage ? 'red' : '',
+                    backgroundColor: 'transparent'
+                  },
+                }}
+            />
           </Form>
         </Col>
-        <Col xs="8">
+        <Col xs="7">
           <div className="bg-img">
             <img src={background} alt="" />
           </div>
         </Col>
       </Row>
-    </Container>
+    </Box>
   );
 };
 

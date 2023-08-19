@@ -181,29 +181,33 @@ class MapComponent extends Component {
         </div>
         
         </Col>
-      </Row>
+      </Row><br></br>
       <Row className="justify-content">
-        <Col xs="1">
-          <div style={{ height: '100%', border: '1px solid #ccc',  backgroundColor: 'white' }}>
+        {/* <Col xs="1">
+          <div style={{ height: '100%',  backgroundColor: 'white' }}>
           </div>
-        </Col>
+        </Col> */}
         <Col xs="3">
-          <div style={{ height: '100%',border: '1px solid #ccc' }}>
-          <div style={{ height: '30%', border: '1px solid #213f5e', backgroundColor: 'white' }}>
+        <Row className="justify-content">
+          <div style={{ height: '200px', backgroundColor: 'white' }}>
             <h5>Regional Risk Score</h5>
             <p>{riskScore}</p>
           </div>
-            <div style={{ height: '35%', border: '1px solid #213f5e', backgroundColor: 'white' }}>
+        </Row><br></br>
+        <Row className="justify-content">
+            <div style={{ height: '200px', backgroundColor: 'white' }}>
               <p>Number of FDD in Region</p>
               <FDDChart fddData={fddData} />
             </div>
-            <div style={{ height: '35%', border: '1px solid #213f5e', backgroundColor: 'white' }}>
+        </Row><br></br>
+        <Row className="justify-content">
+            <div style={{ height: '200px', backgroundColor: 'white' }}>
               <p>Total Ice in Region by type</p>
               <IceChart />
             </div>
-          </div>
+        </Row>
         </Col>
-        <Col xs="8">
+        <Col xs="9">
           <div id="map" style={{ height: '100vh' }}>
           <CountryMap />
           </div>

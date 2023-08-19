@@ -1,93 +1,218 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, FormGroup, Input, Button } from 'reactstrap';
-import {Link} from "react-router-dom";
+import Box from '@mui/material/Box';
+import {Row, Col, Form, FormGroup, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { TextField, InputAdornment, IconButton, Snackbar } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 import Logo from './Logo';
 import background from './background.png';
 import './SignupForm.css';
 
 const SignupForm = () => {
-  const [first_name, setFirstName] = useState('');
-  const [last_name, setLastName] = useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const [full_name, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const isEmailValid = (email) => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
+
+    if (!full_name || !email || !password) {
+      setErrorMessage('Please fill in all fields.');
+      setSuccessMessage('');
+      return;
+    }
+
+    if (!isEmailValid(email)) {
+      setErrorMessage('Please enter a valid email address.');
+      setSuccessMessage('');
+      return;
+    }
+
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/register/', {
-        first_name,
-        last_name,
+        full_name,
         email,
         password,
       });
-      console.log(response.data); // Handle success response
+      if (response.data) {
+        setSuccessMessage('Account created successfully!');
+        setErrorMessage('');
+      }
     } catch (error) {
-      console.error(error); // Handle error
+      if (error.response && error.response.data && error.response.data.error === 'Email already exists.') {
+        setErrorMessage('This email already exists.');
+      } else {
+        setErrorMessage('Account creation failed.');
+      }
+      setSuccessMessage('');
     }
   };
 
+  const handleSnackbarClose = () => {
+    setSuccessMessage('');
+    setErrorMessage('');
+  };
+
   return (
-    <Container>
-      <Row className="justify-content">
-        <Col xs="4">
-        <div className="left-sidebar">
-          <Form className="signup-form" onSubmit={handleSignup}>
-            <Logo />
-            <h5>POLARCTIC</h5>
-            <h2>Create an account</h2>
-            <p>let's get started!</p>
-            <FormGroup>
-              <Input
-                type="text"
-                placeholder="First Name"
-                value={first_name}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Input
-                type="text"
-                placeholder="Last Name"
-                value={last_name}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </FormGroup>
-            <FormGroup>
-            <Button type="submit" style={{width: '350px', backgroundColor: '#3d0099', borderColor: '#3d0099'}} color="primary">Sign up</Button>
-            </FormGroup>
-            <FormGroup>
-            <Button type="submit" style={{width: '350px'}} color='light'>continue with email</Button>
-            </FormGroup>
-            <div className="account-link">
-              <p>Already have an account? <Link style={{color: 'white'}} to="/login">Log in</Link></p>
-            </div>
-          </Form>
-          </div>
-        </Col>
-        <Col xs="8">
+    <Box sx={{ display: 'flex' }}>
+        <Row gutter={false}>
+          <Col xs="5">
+            <Form className="signup-form" onSubmit={handleSignup}>
+              <Logo />
+              <h5 style={{ color: '#3bb3c2', fontSize:18, padding: '0 55px'}}>POLARCTIC</h5>
+              <h2 style={{ fontSize:21 }}>Create an account</h2>
+              <p style={{ fontSize:14 }}>let's get started!</p>
+              <FormGroup>
+                <TextField
+                  type="text"
+                  label="Name"
+                  sx={{
+                    "& .MuiInputLabel-root": {color: 'white', fontFamily: 'Nunito'},
+                    "& .MuiOutlinedInput-root": {
+                      "& > fieldset": { borderColor: "white" },
+                    },
+                    "& .MuiOutlinedInput-root:hover": {
+                      "& > fieldset": {
+                        borderColor: "white"
+                      }
+                    },
+                  }}
+                  variant="outlined"
+                  size="small"
+                  value={full_name}
+                  onChange={(e) => setFullName(e.target.value)}
+                  InputLabelProps={{
+                    style: { color: 'white', backgroundColor: '#242442'},
+                  }}
+                  InputProps={{
+                    style: { color: 'white'},
+                  }}
+                  fullWidth
+                />
+              </FormGroup>
+              <FormGroup>
+                <TextField
+                  type="email"
+                  label="Email"
+                  variant="outlined"
+                  size="small"
+                  value={email}
+                  sx={{
+                    "& .MuiInputLabel-root": {color: 'white', fontFamily: 'Nunito'},
+                    "& .MuiOutlinedInput-root": {
+                      "& > fieldset": { borderColor: "white" },
+                    },
+                    "& .MuiOutlinedInput-root:hover": {
+                      "& > fieldset": {
+                        borderColor: "white"
+                      }
+                    },
+                  }}
+                  onChange={(e) => setEmail(e.target.value)}
+                  InputLabelProps={{
+                    style: { color: 'white', backgroundColor: '#242442' },
+                  }}
+                  InputProps={{
+                    style: { color: 'white' },
+                  }}
+                  fullWidth
+                />
+              </FormGroup>
+              <FormGroup>
+                <TextField
+                    type={showPassword ? 'text' : 'password'}
+                    label="Password"
+                    variant="outlined"
+                    size="small"
+                    value={password}
+                    sx={{
+                      "& .MuiInputLabel-root": { color: 'white', fontFamily: 'Nunito'},
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": { borderColor: "white" },
+                        "&:hover fieldset": { borderColor: "white" },
+                      },
+                    }}
+                    onChange={(e) => setPassword(e.target.value)}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            edge="end"
+                            style={{ color: 'white' }} 
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                      style: { color: 'white'}, 
+                    }}
+                    InputLabelProps={{
+                      style: { color: 'white', backgroundColor: '#242442' },
+                    }}
+                    fullWidth
+                  />
+              </FormGroup>
+              <FormGroup>
+                <Button
+                  type="submit"
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#31327e',
+                    borderColor: '#31327e',
+                  }}
+                  color="primary" fullWidth
+                >
+                  Sign up
+                </Button>
+              </FormGroup>
+              <FormGroup>
+                <Button type="submit" style={{ width: '100%' }} color="light">
+                  continue with email
+                </Button>
+              </FormGroup>
+              <div className="account-link">
+                <p style={{ fontSize:12, padding: '0 30px'}}>
+                  Already have an account?{' '}
+                  <Link style={{ color: 'white' }} to="/login">
+                    Log in
+                  </Link>
+                </p>
+              </div>
+            </Form>
+          </Col>
+          <Col xs="7">
           <div className="bg-img">
             <img src={background} alt="" />
           </div>
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+        </Row>
+        <Snackbar
+          open={!!successMessage || !!errorMessage}
+          autoHideDuration={3000}
+          onClose={handleSnackbarClose}
+          message={successMessage || errorMessage}
+          ContentProps={{
+            sx: {
+              color: successMessage ? '#99ffbb' : errorMessage ? 'red' : '',
+              backgroundColor: 'transparent'
+            },
+          }}
+      />
+      </Box>
   );
 };
 

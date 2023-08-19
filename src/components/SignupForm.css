@@ -1,15 +1,6 @@
+  .bg-img img {
+    width: 180%; 
+    height: 100dvh;
+  }
 
   
-  /* Placeholder color */
-  input::placeholder {
-    color: white;
-  }
-  .bg-img img {
-    width: 100vh; 
-    height: 100vh;
-  }
-
-  .left-sidebar{
-    width: 100vh; 
-    height: 100vh;
-  }
