@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
+import GoogleLogin from 'react-google-login';
 import {Row, Col, Form, FormGroup, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { TextField, InputAdornment, IconButton, Snackbar } from '@mui/material';
@@ -8,6 +9,7 @@ import axios from 'axios';
 import Logo from './Logo';
 import background from './background.png';
 import './SignupForm.css';
+import googleLogin from './GoogleLogin'
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -63,6 +65,12 @@ const SignupForm = () => {
   const handleSnackbarClose = () => {
     setSuccessMessage('');
     setErrorMessage('');
+  };
+
+  const responseGoogle = async (response) => {
+    let googleResponse = await googleLogin(response.accessToken);
+    console.log(googleResponse);
+    console.log(response);
   };
 
   return (
@@ -180,9 +188,12 @@ const SignupForm = () => {
                 </Button>
               </FormGroup>
               <FormGroup>
-                <Button type="submit" style={{ width: '100%' }} color="light">
-                  continue with email
-                </Button>
+              <GoogleLogin
+                clientId="173833737443-qfckldasquupsdfffehslv30mpls2bmn.apps.googleusercontent.com"
+                buttonText="continue with email"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+              />
               </FormGroup>
               <div className="account-link">
                 <p style={{ fontSize:12, padding: '0 30px'}}>

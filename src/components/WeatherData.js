@@ -5,7 +5,6 @@ import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
 import { Container, Row, Col,Button } from 'reactstrap';
-import Autosuggest from 'react-autosuggest';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FDDChart from './FDDChart';
 import IceChart from './IceChart';
@@ -17,28 +16,34 @@ class MapComponent extends Component {
     super(props);
     this.state = {
       searchQuery: '',
-      userLocation: '',
-      suggestions: [],
+      selectedCountry: '',
       map: null,
       marker: null,
       riskScore: null,
+      countryList: [],
     };
   }
-  
-  handleSearchChange = (event, { newValue }) => {
-    this.setState({ searchQuery: newValue });
-  };
 
-  handleLocationChange = (event, { newValue }) => {
-    this.setState({ userLocation: newValue });
+  componentDidMount() {
+    axios.get('https://restcountries.com/v3.1/all')
+      .then(response => {
+        const countryList = response.data.map(country => country.name.common);
+        this.setState({ countryList });
+      })
+      .catch(error => {
+        console.error('Error fetching country list:', error);
+      });
+  }
+  
+  handleCountrySelect = (event) => {
+    const selectedCountry = event.target.value;
+    this.setState({ selectedCountry });
   };
   
-  handleDatetimeChange = (event) => {
-    this.setState({ userDatetime: event.target.value });
-  };
-  
-  fetchWeatherData = (location) => { 
-    return axios.get(`http://localhost:8000//weather/fetch-data/?location=${location}`)
+  searchCountry = () => { 
+    const { selectedCountry, map, marker} = this.state;
+    if (!selectedCountry) return;
+    axios.get(`http://localhost:8000//weather/fetch-data/?location=${selectedCountry}`)
       .then((response) => {
         const weatherData = response.data;
 
@@ -47,9 +52,9 @@ class MapComponent extends Component {
         const windSpeed = weatherData.currentConditions.windSpeed;
 
         // Calculate risk scores based on your criteria
-        const temperatureScore = temperature > 30 ? 10 : 0;
+        const temperatureScore = temperature > 30 ? 15 : 5;
         const precipitationScore = precipitation > 10 ? 20 : 0;
-        const windSpeedScore = windSpeed > 20 ? 15 : 0;
+        const windSpeedScore = windSpeed > 20 ? 15 : 10;
 
         // Calculate overall risk score
         const overallScore = temperatureScore + precipitationScore + windSpeedScore;
@@ -61,90 +66,25 @@ class MapComponent extends Component {
           longitude: weatherData.longitude,
           address: weatherData.address,
         });
+        // Place a marker on the map
+        if (map) {
+          const { latitude, longitude } = weatherData;
+          if (this.state.marker) {
+            map.removeLayer(this.state.marker);
+          }
+          const marker = L.marker([latitude, longitude]).addTo(map);
+          map.setView([latitude, longitude], 6);
+          this.setState({ marker });
+        }
       })
       .catch((error) => {
         console.error('Error fetching location data:', error);
       });
   };
 
-  fetchSuggestions = (value) => {
-    fetch(`https://nominatim.openstreetmap.org/search?country=${value}&format=json`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok.');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        // Process data
-      })
-      .catch((error) => {
-        console.error('An error occurred while fetching data:', error);
-        alert('An error occurred while fetching data. Please check your network connection.');
-      });
-  };
-  
-
-  searchCountry = () => {
-    const { userLocation, map, marker } = this.state;
-    if (!userLocation) return;
-  
-    fetch(`https://nominatim.openstreetmap.org/search?country=${userLocation}&format=json`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.length > 0) {
-          const [result] = data;
-          const { lat, lon } = result;
-          const coords = [parseFloat(lat), parseFloat(lon)];
-  
-          if (marker) {
-            map.removeLayer(marker);
-          }
-  
-          const newMarker = L.marker(coords).addTo(map);
-          map.setView(coords, 6);
-  
-          this.setState({ marker: newMarker });
-
-          this.fetchWeatherData(userLocation)
-            .then((weatherData) => {
-
-              const temperature = weatherData.temp;
-  
-              if (temperature > 25) {
-                map.getContainer().style.backgroundColor = 'red';
-              } else {
-                map.getContainer().style.backgroundColor = 'blue';
-              }
-            })
-            .catch((error) => {
-              console.error('Error fetching weather data:', error);
-            });
-        } else {
-          alert('Country not found.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-        alert('An error occurred while searching for the country.');
-      });
-  };
-  
-  
-
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.fetchSuggestions(value);
-  };
-
-  
-  onSuggestionSelected = (event, { suggestion }) => {
-    this.setState({ userLocation: suggestion });
-  };
-  
-
   render() {
 
-    const { userLocation, suggestions,  riskScore} = this.state;
+    const {selectedCountry, countryList, riskScore} = this.state;
 
     const fddData = [15, 20, 10, 5, 8, 12, 18,23,13,33,21,22];
 
@@ -158,26 +98,18 @@ class MapComponent extends Component {
       <Row>
         <Col>
         <div className="d-flex align-items-center" style={{ width: '100%', backgroundColor: 'white'}}>
-        <Autosuggest
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-          onSuggestionSelected={this.onSuggestionSelected}
-          getSuggestionValue={(suggestion) => suggestion}
-          renderSuggestion={(suggestion) => <div>{suggestion}</div>}
-          inputProps={{
-            value: userLocation,
-            onChange: this.handleLocationChange,
-          }}
-          onSuggestionsClearRequested={() => {
-            // Clear the suggestions array in the state when suggestions need to be cleared
-            this.setState({ suggestions: [] });
-          }}
-        />
-
-
-        <Button color="info" onClick={this.searchCountry}>
-          Search
-        </Button>
+  
+        <select onChange={this.handleCountrySelect} value={selectedCountry}>
+                <option value="">Select a country</option>
+                {countryList.map((country, index) => (
+                  <option key={index} value={country}>
+                    {country}
+                  </option>
+                ))}
+              </select>
+              <Button color="info" onClick={this.searchCountry}>
+                Search
+              </Button>
         </div>
         
         </Col>
@@ -209,7 +141,7 @@ class MapComponent extends Component {
         </Col>
         <Col xs="9">
           <div id="map" style={{ height: '100vh' }}>
-          <CountryMap />
+          <CountryMap selectedCountry={selectedCountry} />
           </div>
         </Col>
       </Row>

@@ -3,9 +3,9 @@ import { MapContainer, TileLayer, GeoJSON} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import countriesData from './countries.json'; 
 
-const CountryMap = () => {
+const CountryMap = ({ selectedCountry }) => {
 
-  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectCountry, setSelectCountry] = useState(null);
   const [countryColor, setCountryColors] = useState({});
 
   useEffect(() => {
@@ -32,13 +32,9 @@ const CountryMap = () => {
     };
   };
 
-  const onCountryClick = (event) =>{
-    const clickedContryName = event.target.feature.properties.ADMIN;
-    setSelectedCountry(clickedContryName)
-  };
 
   const resetSelection = () => {
-    setSelectedCountry(null);
+    setSelectCountry(null);
   };
 
   return (
@@ -52,10 +48,7 @@ const CountryMap = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <GeoJSON data={countriesData.features} style={countryStyle} onEachFeature={(feature, layer) => {
-            layer.on({
-              click: onCountryClick,
-            });
+      <GeoJSON data={countriesData.features} style={countryStyle}  onEachFeature={(feature, layer) => {
             if (feature.properties && feature.properties.ADMIN) {
               layer.bindPopup(feature.properties.ADMIN);
             }
