@@ -28,7 +28,6 @@ const chartOptions = {
   },
     scales:{
         x: {
-            type: 'category', 
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           },
         y:[

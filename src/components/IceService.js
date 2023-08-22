@@ -19,87 +19,93 @@ const IceService = () => {
                 </div>
             </Col>
         </Row><br></br>
-        <Row className="justify-content">
+        <Row className="justify-content" style={{ marginLeft: '20%'}}>
             <Col xs="6">
-                <div style={{ backgroundColor: 'white' }}>
+                <div style={{ backgroundColor: 'white', padding: '0 60px', width: '70%' }}>
                     <ReactCountryFlag
-                        countryCode="US"
+                        countryCode="CA"
                         svg
                         style={{
-                            width: '2em',
-                            height: '2em',
+                            width: '10em',
+                            height: '8em',
                         }}
-                        title="US"
+                        title="Canada Ice Service"
                     />
+                    <p>Canada Ice Service</p>
                 </div>
             </Col>
-            <Col xs="6">
-                <div style={{ backgroundColor: 'white' }}>
+            <Col xs="6" style={{ marginLeft: '-10%'}}>
+                <div style={{ backgroundColor: 'white', padding: '0 60px', width: '70%' }}>
                 <ReactCountryFlag
                         countryCode="US"
                         svg
                         style={{
-                            width: '2em',
-                            height: '2em',
+                            width: '10em',
+                            height: '8em',
                         }}
-                        title="US"
+                        title="NoAA Ice Desk"
                     />
-                </div>
-            </Col>
-        </Row><br></br>
-        <Row className="justify-content">
-            <Col xs="6">
-                <div style={{ backgroundColor: 'white' }}>
-                <ReactCountryFlag
-                        countryCode="US"
-                        svg
-                        style={{
-                            width: '2em',
-                            height: '2em',
-                        }}
-                        title="US"
-                    />
-                </div>
-            </Col>
-            <Col xs="6">
-                <div style={{ backgroundColor: 'white' }}>
-                <ReactCountryFlag
-                        countryCode="US"
-                        svg
-                        style={{
-                            width: '2em',
-                            height: '2em',
-                        }}
-                        title="US"
-                    />
+                    <p>NoAA Ice Desk</p>
                 </div>
             </Col>
         </Row><br></br>
-        <Row className="justify-content">
+        <Row className="justify-content" style={{ marginLeft: '20%'}}>
             <Col xs="6">
-                <div style={{ backgroundColor: 'white' }}>
+                <div style={{ backgroundColor: 'white', padding: '0 60px', width: '70%' }}>
                 <ReactCountryFlag
-                        countryCode="US"
+                        countryCode="FI"
                         svg
                         style={{
-                            width: '2em',
-                            height: '2em',
+                            width: '10em',
+                            height: '8em',
                         }}
-                        title="US"
+                        title="Finish Ice Service"
                     />
+                    <p>Finish Ice Service</p>
                 </div>
             </Col>
-            <Col xs="6">
-                <div style={{ backgroundColor: 'white' }}>
+            <Col xs="6" style={{ marginLeft: '-10%'}}>
+                <div style={{ backgroundColor: 'white', padding: '0 60px', width: '70%' }}>
                 <ReactCountryFlag
-                        countryCode="US"
+                        countryCode="DK"
                         svg
                         style={{
-                            width: '2em',
-                            height: '2em',
+                            width: '10em',
+                            height: '8em',
                         }}
-                        title="US"
+                        title="Danish Metereological Institute"
                     />
+                    <p>Danish Metereological Institute</p>
+                </div>
+            </Col>
+        </Row><br></br>
+        <Row className="justify-content" style={{ marginLeft: '20%'}}>
+            <Col xs="6">
+                <div style={{ backgroundColor: 'white', padding: '0 60px', width: '70%' }}>
+                <ReactCountryFlag
+                        countryCode="NO"
+                        svg
+                        style={{
+                            width: '10em',
+                            height: '8em',
+                        }}
+                        title="Norway Ice Service"
+                    />
+                    <p>Norway Ice Service</p>
+                </div>
+            </Col>
+            <Col xs="6" style={{ marginLeft: '-10%'}}>
+                <div style={{ backgroundColor: 'white', padding: '0 60px', width: '70%' }}>
+                <ReactCountryFlag
+                        countryCode="IS"
+                        svg
+                        style={{
+                            width: '10em',
+                            height: '8em',
+                        }}
+                        title="Iceland Ice Service"
+                    />
+                    <p>Iceland Ice Service</p>
                 </div>
             </Col>
         </Row>

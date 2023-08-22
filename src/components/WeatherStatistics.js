@@ -8,6 +8,7 @@ import IceChart from './IceChart';
 import HistBarChart from './HistBarChart';
 import TotalIceBreakdownBarChart from './TotalIceBreakdownBarChart';
 import RestrictedSlider from "./RestrictedSlider";
+import AverageAirTemp from './AverageAirTemp';
 
 const WeatherStatistics = () => {
 const fddData = [15, 20, 10, 5, 8, 12, 18,23,13,33,21,22];
@@ -36,7 +37,7 @@ const windData = [15, 20, 10, 5, 8, 12, 18,23,13,33,21,22];
                 <div style={{ height:"100%", backgroundColor: 'white' }}>
                     <div style={{marginLeft: '40px',  backgroundColor: 'white' }}>
                         <p>Average air temperature</p>
-                        <p>5°C</p>
+                        <AverageAirTemp />
                     </div>
                 </div>
             </Col>

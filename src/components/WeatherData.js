@@ -6,9 +6,11 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet/dist/leaflet.js';
 import { Container, Row, Col,Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import FDDChart from './FDDChart';
+// import FDDChart from './FDDChart';
 import IceChart from './IceChart';
 import CountryMap from './CountryMap';
+import FDDBarChart from './FDDBarChart';
+import TotalIceDoughnutChart from './TotalIceDoughnutChart';
 // import Home from './Home';
 
 class MapComponent extends Component {
@@ -16,7 +18,7 @@ class MapComponent extends Component {
     super(props);
     this.state = {
       searchQuery: '',
-      selectedCountry: '',
+      selectedCountry: 'United States',
       map: null,
       marker: null,
       riskScore: null,
@@ -41,7 +43,7 @@ class MapComponent extends Component {
   };
   
   searchCountry = () => { 
-    const { selectedCountry, map, marker} = this.state;
+    const { selectedCountry, map} = this.state;
     if (!selectedCountry) return;
     axios.get(`http://localhost:8000//weather/fetch-data/?location=${selectedCountry}`)
       .then((response) => {
@@ -86,10 +88,8 @@ class MapComponent extends Component {
 
     const {selectedCountry, countryList, riskScore} = this.state;
 
-    const fddData = [15, 20, 10, 5, 8, 12, 18,23,13,33,21,22];
-
     return (
-      <Container style={{width: '100%', height: '100vh', backgroundColor: '#eeeeee' }}>
+      <Container style={{width: '100%', height: '100%', backgroundColor: '#eeeeee' }}>
         <Row>
           <Col>
             <div style={{border: '1px solid #ccc', backgroundColor: 'white' }}>Hello Jan</div>
@@ -98,8 +98,8 @@ class MapComponent extends Component {
       <Row>
         <Col>
         <div className="d-flex align-items-center" style={{ width: '100%', backgroundColor: 'white'}}>
-  
-        <select onChange={this.handleCountrySelect} value={selectedCountry}>
+        <h4>Select region:</h4>
+        <select onChange={this.handleCountrySelect} value={selectedCountry} style={{borderColor: '#ccccff', width: '10%'}}>
                 <option value="">Select a country</option>
                 {countryList.map((country, index) => (
                   <option key={index} value={country}>
@@ -107,18 +107,14 @@ class MapComponent extends Component {
                   </option>
                 ))}
               </select>
-              <Button color="info" onClick={this.searchCountry}>
+              <Button color="" onClick={this.searchCountry}>
                 Search
               </Button>
         </div>
         
         </Col>
       </Row><br></br>
-      <Row className="justify-content">
-        {/* <Col xs="1">
-          <div style={{ height: '100%',  backgroundColor: 'white' }}>
-          </div>
-        </Col> */}
+      <Row className="justify-content" style={{ marginLeft: '10px'}}>
         <Col xs="3">
         <Row className="justify-content">
           <div style={{ height: '200px', backgroundColor: 'white' }}>
@@ -129,7 +125,7 @@ class MapComponent extends Component {
         <Row className="justify-content">
             <div style={{ height: '200px', backgroundColor: 'white' }}>
               <p>Number of FDD in Region</p>
-              <FDDChart fddData={fddData} />
+              <FDDBarChart />
             </div>
         </Row><br></br>
         <Row className="justify-content">
@@ -139,8 +135,8 @@ class MapComponent extends Component {
             </div>
         </Row>
         </Col>
-        <Col xs="9">
-          <div id="map" style={{ height: '100vh' }}>
+        <Col xs="9" style={{ height: '100vh', width: '75%'}}>
+          <div id="map">
           <CountryMap selectedCountry={selectedCountry} />
           </div>
         </Col>
