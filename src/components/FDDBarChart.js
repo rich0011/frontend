@@ -2,26 +2,27 @@ import React, {useState, useEffect} from "react";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
 
-function FDDBarChart() {
+function FDDBarChart({ selectedCountry }) {
     const [fddBarChartData, setFddBarChart] = useState([]);
     useEffect(() => {
-        const apiKey = '68DN78LZLDAAMDUNVGFTPZUH7';
-        const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/London,UK/last30days?key=${apiKey}&include=days&elements=tempmax,tempmin`;
+        if (!selectedCountry) return;
+        // const apiKey = '68DN78LZLDAAMDUNVGFTPZUH7';
+        const url = `http://localhost:8000//weather/fetch-data/?location=${selectedCountry}`;
 
         axios.get(url).then(response => {
-            const days = response.data.days;
-            const calculatedData = days.map(day => ({
-                fdd: Math.max(32-((day.tempmax + day.tempmin) / 2)),
-            }));
-            console.log(calculatedData);
-            setFddBarChart(calculatedData);
+            const fdd_data = response.data.fdd;
+            // const calculatedData = days.map(day => ({
+            //     fdd: Math.max(32-((day.tempmax + day.tempmin) / 2)),
+            // }));
+            // console.log(calculatedData);
+            setFddBarChart(fdd_data);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
         });
-    }, []);
+    }, [selectedCountry]);
     const chartData = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: fddBarChartData.map(day => day.day),
         datasets:[
             {
                 label: 'Freezing Degree Days',

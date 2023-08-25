@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
-import GoogleLogin from 'react-google-login';
+// import GoogleLogin from 'react-google-login';
 import {Row, Col, Form, FormGroup, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { TextField, InputAdornment, IconButton, Snackbar } from '@mui/material';
@@ -9,7 +9,7 @@ import axios from 'axios';
 import Logo from './Logo';
 import background from './background.png';
 import './SignupForm.css';
-import googleLogin from './GoogleLogin'
+import GoogleLogin from './GoogleLogin'
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -67,11 +67,11 @@ const SignupForm = () => {
     setErrorMessage('');
   };
 
-  const responseGoogle = async (response) => {
-    let googleResponse = await googleLogin(response.accessToken);
-    console.log(googleResponse);
-    console.log(response);
-  };
+  // const responseGoogle = async (response) => {
+  //   let googleResponse = await googleLogin(response.accessToken);
+  //   console.log(googleResponse);
+  //   console.log(response);
+  // };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -188,12 +188,18 @@ const SignupForm = () => {
                 </Button>
               </FormGroup>
               <FormGroup>
-              <GoogleLogin
-                clientId="173833737443-qfckldasquupsdfffehslv30mpls2bmn.apps.googleusercontent.com"
-                buttonText="continue with email"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-              />
+              <GoogleLogin />
+                              {/* <Button
+                  type="submit"
+                  style={{
+                    width: '100%',
+                    backgroundColor: 'white',
+                    borderColor: 'white',
+                  }}
+                  color="black" fullWidth
+                >
+                  Continue with email
+                </Button> */}
               </FormGroup>
               <div className="account-link">
                 <p style={{ fontSize:12, padding: '0 30px'}}>

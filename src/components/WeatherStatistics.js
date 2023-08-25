@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Input } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FDDChart from './FDDChart';
 import TempLineChart from './TempLineChart';
@@ -23,7 +23,18 @@ const windData = [15, 20, 10, 5, 8, 12, 18,23,13,33,21,22];
         <Row className="justify-content">
             <Col>
                 <div className="d-flex align-items-center" style={{ width: '100%', backgroundColor: 'white'}}>
-                    <span>Select region<Input type='search' placeholder='search' color="info">Search</Input></span>
+                    <h4>Select region:</h4>
+                    <select style={{borderColor: '#ccccff', width: '10%'}}>
+                    <option value="">Canada NWP</option>
+                    {/* {countryList.map((country, index) => (
+                    <option key={index} value={country}>
+                        {country}
+                    </option>
+                    ))} */}
+                    </select>
+                    <Button color="" >
+                        Search
+                    </Button>
                 </div>
             </Col>
         </Row>

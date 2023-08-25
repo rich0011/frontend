@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Input } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import IceAlongRouteBarChart from "./IceAlongRouteBarChart";
 import RestrictedSlider from "./RestrictedSlider";
@@ -17,7 +17,13 @@ const RouteStatistics = () => {
       <Row className="justify-content">
           <Col>
               <div className="d-flex align-items-center" style={{ width: '100%', backgroundColor: 'white'}}>
-                  <span>Select region<Input type='search' placeholder='search' color="info">Search</Input></span>
+              <h4>Select region:</h4>
+                    <select style={{borderColor: '#ccccff', width: '10%'}}>
+                    <option value="">Canada NWP</option>
+                    </select>
+                    <Button color="" >
+                        Search
+                    </Button>
               </div>
           </Col>
       </Row>
