@@ -25,6 +25,7 @@ class MapComponent extends Component {
       riskScore: null,
       countryList: [],
     };
+    this.fetchRiskScoreData = this.fetchRiskScoreData.bind(this);
   }
 
   componentDidMount() {
@@ -43,23 +44,20 @@ class MapComponent extends Component {
     this.setState({ selectedCountry });
   };
   
-  searchCountry = () => { 
-    const { selectedCountry, map} = this.state;
-    async function fetchRiskScoreData(){
+  async fetchRiskScoreData() {
+    const { selectedCountry, map } = this.state;
+
     if (!selectedCountry) return;
-    try{
+
+    try {
       const response = await axios.get(`http://localhost:8000//weather/fetch-data/?location=${selectedCountry}`)
       
       const weatherData = response.data;
 
-      const temperature = weatherData.currentConditions.temp;
-      const precipitation = weatherData.currentConditions.precip;
-      const windSpeed = weatherData.currentConditions.windSpeed;
-
       // Calculate risk scores based on your criteria
-      const temperatureScore = temperature > 30 ? 15 : 5;
-      const precipitationScore = precipitation > 10 ? 20 : 0;
-      const windSpeedScore = windSpeed > 20 ? 15 : 10;
+      const temperatureScore = weatherData.currentConditions.temp > 30 ? 15 : 5;
+      const precipitationScore = weatherData.currentConditions.precip > 10 ? 20 : 0;
+      const windSpeedScore = weatherData.currentConditions.windSpeed > 20 ? 15 : 10;
 
       // Calculate overall risk score
       const overallScore = temperatureScore + precipitationScore + windSpeedScore;
@@ -71,6 +69,7 @@ class MapComponent extends Component {
         longitude: weatherData.longitude,
         address: weatherData.address,
       });
+
       // Place a marker on the map
       if (map) {
         const { latitude, longitude } = weatherData;
@@ -81,11 +80,14 @@ class MapComponent extends Component {
         map.setView([latitude, longitude], 6);
         this.setState({ marker });
       }
-      } catch(error) {
-        console.error('Error fetching location data:', error);
-      }
+    } catch(error) {
+      console.error('Error fetching location data:', error);
+    }
   }
-}
+
+  searchCountry = async () => { 
+    await this.fetchRiskScoreData();
+  }
 
   render() {
 

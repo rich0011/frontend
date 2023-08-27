@@ -6,25 +6,25 @@ const GoogleLogin = () => {
   const [error, setError] = useState(null); // State to track errors
   const navigate = useNavigate();
 
-  const responseGoogle = (response) => {
-    if (response.error) {
-      // Handle error cases
-      setError(response.error);
-    } else if (response.user) {
+  const responseGoogle = (response) => { 
+    if (response.user) {
       // Handle successful login
       navigate('/home');
     }
+    else{
+      setError("");
+    }
   }
+  
 
   return (
     <div>
-      {error && <p>An error occurred: {error}</p>}
+      {error && <p>{error}</p>}
       <GoogleLoginButton
-        clientId="173833737443-qfckldasquupsdfffehslv30mpls2bmn.apps.googleusercontent.com"
+        clientId="486641136026-u3eb6sbvvj4ec3ol91i2vanet82dkh4h.apps.googleusercontent.com"
         buttonText="continue with email"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
-        isSignedIn={true}
         cookiePolicy={'single_host_origin'}
       />
     </div>
