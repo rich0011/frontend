@@ -3,24 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@canvasjs/react-charts": "^1.0.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@material-ui/utils": "^4.11.3",
     "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.5",
+    "@styled-icons/boxicons-regular": "^10.47.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.1",
-    "chart.js": "^4.3.3",
-    "chartjs-plugin-datalabels": "^2.2.0",
-    "geojsonhint": "^2.0.0",
+    "chartjs": "^0.3.24",
     "leaflet": "^1.9.4",
     "react": "^18.2.0",
     "react-autosuggest": "^10.1.0",
     "react-chartjs-2": "^5.2.0",
-    "react-chartjs-3": "^2.7.7",
     "react-country-flag": "^3.1.0",
     "react-dom": "^18.2.0",
     "react-google-login": "^5.2.2",
@@ -29,7 +27,8 @@
     "react-scripts": "5.0.1",
     "react-slider": "^2.0.6",
     "reactstrap": "^9.2.0",
-    "styled-components": "^5.3.11",
+    "styled-components": "^6.0.7",
+    "styled-icons": "^10.47.0",
     "weather-styled-icon": "^3.3.4",
     "web-vitals": "^2.1.4"
   },
@@ -37,13 +36,37 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "standard",
+    "lint-fix": "standard --fix",
+    "format": "prettier --check 'src/**/*.{html,css,scss,json,md}'",
+    "format-fix": "prettier --write 'src/**/*.{html,css,scss,json,md}'",
+    "format-lint-fix": "prettier --write 'src/**/*.{html,css,scss,json,md}' && standard --fix"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "standard": {
+    "env": [
+      "jest",
+      "es6",
+      "mocha",
+      "browser"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "devDependencies": {
+    "husky": "^4.3.8",
+    "lint-staged": "^12.3.7",
+    "prettier": "^2.6.0",
+    "standard": "^16.0.4"
   },
   "browserslist": {
     "production": [
@@ -56,5 +79,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "lint-staged": {
+    "*.{js,jsx}": "standard --fix",
+    "*.{html,css,scss,json,md}": "prettier --write"
   }
 }
