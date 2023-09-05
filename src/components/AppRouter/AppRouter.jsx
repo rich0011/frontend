@@ -22,13 +22,13 @@ const AppRouter = () => {
         <Route path='/services' element={<WeatherServices />} />
         <Route path='/login' element={<LoginHome />} />
 
-        <Route exact path='/' element={<PrivateRoute/>}>
+        {/* <Route exact path='/' element={<PrivateRoute/>}>
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/charts" element={<Charts />} />
             <Route exact path="/locations" element={<LocationMap />} />
             <Route exact path="/weather" element={<WeatherData />} />
             <Route exact path="/services" element={<WeatherServices />} />
-        </Route>
+        </Route> */}
       </Routes>
     </BrowserRouter>
   )

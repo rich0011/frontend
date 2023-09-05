@@ -175,32 +175,48 @@ export const InformationWrapper = styled.div`
   width: 25%;
   height: 100%;
 `
+export const MainInformationWrapper = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  width: 73%;
+  height: 100%;
+`
 export const RegionInformationWrapper = styled.div`
   background-color: var(--component-color);
   width: 100%;
   height: 20%;
   margin-bottom: 5%;
   h5 {
-    padding-left: 20%;
-    padding-top: 10px;
+    padding-left: 5%;
+    padding-top: 5px;
 
   }
   p {
-    padding-left: 30%;
-    padding-top: 15px;
+    padding-left: 15%;
+    /* padding-top: 5px; */
 
   }
 `
 export const ChartWrapper = styled.div`
   background-color: var(--component-color);
   width: 100%;
-  height: 30%;
+  height: 34%;
   margin-bottom: 5%;
+  p {
+    font-family: DM sans;
+    font-size: 9.4px;
+  }
 `
 export const PieChartWrapper = styled.div`
   background-color: var(--component-color);
+  /* align-items: top; */
+  justify-content: center;
   width: 100%;
-  height: 40%;
+  height: 46%;
+  p {
+    font-family: DM sans;
+    font-size: 9.4px;
+  }
 `
 
 export const ContentWrapper = styled.div`
@@ -226,56 +242,84 @@ export const AverageAirTempWrapper = styled.div`
   width: 100%;
   height: 20%;
   margin-bottom: 5%;
+  p {
+    padding-top: 10%;
+  }
 `
+export const SubSmallContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 20%;
+  /* margin-bottom: 5%; */
+`
+export const SubMeduimContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 33%;
+  margin-top: 1%;
+`
+export const SubBigContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  /* height: 40; */
+  margin-top: 1%;
+`
+
 export const SeeSurfaceTempWrapper = styled.div`
   background-color: var(--component-color);
-  width: 24%;
-  height: 20%;
-
+  width: 32%;
+  height: 95%;
+  margin-bottom: 5%;
+  p {
+    padding-top: 10%;
+    font-family: DM Sans;
+    font-size: 9.4;
+  }
 `
+
 export const TempLineChartWrapper = styled.div`
   background-color: var(--component-color);
-  width: 36%;
-  height: 30%;
-  margin-bottom: 2%;
+  height: 95%;
+  width: 49%;
+  p {
+    font-family: DM sans;
+    font-size: 9.4px;
+  }
 `
 export const HistBarChartWrapper = styled.div`
   background-color: var(--component-color);
-  width: 36%;
-  height: 40%;
-`
-export const PreciptationWrapper = styled.div`
-  background-color: var(--component-color);
-  width: 24%;
-  height: 20%;
-`
-export const SolarRadiationWrapper = styled.div`
-  background-color: var(--component-color);
-  width: 24%;
-  height: 20%;
+  width: 49%;
+  height: 157%;
+  p {
+    font-family: DM sans;
+    font-size: 9.4px;
+  }
 `
 export const PolarisRioCodeWrapper = styled.div`
   background-color: var(--component-color);
   width: 100%;
-  height: 20%;
+  height: 15%;
   margin-bottom: 5%;
-`
-export const WindWrapper = styled.div`
-  background-color: var(--component-color);
-  width: 100%;
-  height: 30%;
-  margin-bottom: 5%;
+  p {
+    font-family: DM sans;
+    font-size: 9.4px;
+    padding-top: 10%;
+    padding-left: 3%;
+  }
+  h3 {
+    font-family: DM sans;
+    font-size: 14.6px;
+    padding-left: 3%;
+  }
 `
 export const RoutePreciptationWrapper = styled.div`
   background-color: var(--component-color);
   width: 100%;
-  height: 30%;
+  height: 35%;
   margin-bottom: 5%;
-`
-export const IceAlongRouteChartWrapper = styled.div`
-  background-color: var(--component-color);
-  width: 100%;
-  height: 40%;
 `
 export const AccountWrapper = styled.div`
   display: flex;
@@ -350,4 +394,53 @@ export const LogoutButton = styled.button`
     border-color: darkgray;
     border-width: 5px; 
   }
+`
+ export const HorizontalRule = styled.hr`
+  background: #c4c4d4;
+  color: #c4c4d4;
+  border-color: #cdcdcd;
+  height: 2px;
+  margin-left: 2%;
+`
+export const WeatherDataWrapper = styled.div`
+  background-color: var(--component-color);
+  width: 24%;
+  height: 100%;
+  margin-bottom: 5%;
+  p {
+    padding-top: 10%;
+    font-family: DM Sans;
+    font-size: 9.4;
+  }
+`
+export const WeatherMainContentWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`
+export const WeatherIconContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 20%;
+  margin-top: 3%;
+`
+export const WeatherIconFirstContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 30%;
+  margin-top: 2%;
+`
+export const WeatherIconSecondContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 30%;
+  margin-top: 1%;
+`
+export const WeatherDataIconWrapper = styled.div`
+  background-color: var(--component-color);
+  width: 13%;
+  height: 100%;
+  /* margin-bottom: 5%; */
 `

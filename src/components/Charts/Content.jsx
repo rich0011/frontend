@@ -1,64 +1,119 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import {
   ContentArea,
   InformationWrapper,
-  ContentWrapper,
+  MainInformationWrapper,
   ChartWrapper,
   AverageAirTempWrapper,
   PieChartWrapper,
-  SubHeaderWrapper,
-  FilterButton,
-  SelectionOptionWrapper,
-  SelectionSearchButtonWrapper,
-  SearchButton
+  SeeSurfaceTempWrapper,
+  SubSmallContentWrapper,
+  SubMeduimContentWrapper,
+  SubBigContentWrapper,
+  TempLineChartWrapper,
+  HistBarChartWrapper
 } from '../Home/styled'
-import AverageAirTemp from './AverageAirTemp'
-import WeatherStatistics from './WeatherStatistics'
-import IceChart from './IceChart'
-import FDDChart from './FDDChart'
-// import CountryMap from './CountryMap'
+import AverageAirTemp from './AverageAirTemp';
+import SeeSurfaceTemp from './SeeSurfaceTemp';
+import SolarRadiation from './SolarRadiation';
+import TempLineChart from './TempLineChart';
+import WindSpeedBarChart from './WindSpeedBarChart';
+import TotalIceBreakdownBarChart from './TotalIceBreakdownBarChart';
+import HistBarChart from './HistBarChart';
+import IceChart from './IceChart';
+import FDDChart from './FDDChart';
+import { Context } from '../../Contexts/AppContext';
+import { BASE_URL } from '../../config/config';
+import Preciptation from './Preciptation';
+import Search from '../Home/Search';
 
-export const Content = ({ countryList, selectedCountry }) => {
-  
+export const Content = () => {
+  const { countryList, selectedCountry, setCountryList, setSelectedCountry } = useContext(Context);
+  const [map, setMap] = useState(null);
+  const [marker, setMarker] = useState(null);
+  const [weatherData, setWeatherData] = useState(0);
+
+  const handleCountrySelect = (event) => {
+    const selectedCountry = event.target.value;
+    setSelectedCountry(selectedCountry);
+  };
+
+  useEffect(() => {
+    axios
+      .get('https://restcountries.com/v3.1/all')
+      .then((response) => {
+        const countryList = response.data.map((country) => country.name.common);
+        setCountryList(countryList);
+      })
+      .catch((error) => {
+        console.error('Error fetching country list:', error);
+      });
+  }, []);
+
+  useEffect(() =>{
+    if(selectedCountry){
+        fetchWeatherData()
+    }
+  },[selectedCountry])
+
+  const fetchWeatherData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/weather/fetch-data/?location=${selectedCountry}`
+      );
+
+      const weatherData = response.data;
+      setWeatherData(weatherData);
+    } catch (error) {
+      console.error('Error fetching location data:', error);
+    }
+  };
+
   return (
     <>
-      <SubHeaderWrapper>
-        <SelectionOptionWrapper>
-        <h4 style={{ marginTop:'0.6rem' }}>Select region:  </h4>
-        <select onChange={"hello"} value={selectedCountry} style={{ borderColor: '#e6e6f0', height: '3rem', width: '15%' }}>
-          <option value="">Canada NWP</option>
-          {/* {countryList.map((country, index) => (
-            <option key={index} value={country}>
-              {country}
-            </option>
-          ))} */}
-        </select>
-        </SelectionOptionWrapper>
-        <SelectionSearchButtonWrapper>
-        <SearchButton color="" onClick={'hello'}>
-          Search...
-        </SearchButton>
-        <FilterButton color="" onClick={'hello'}>
-            Filter
-        </FilterButton>
-        </SelectionSearchButtonWrapper>
-      </SubHeaderWrapper>
+    <Search handleCountrySelect={handleCountrySelect} />
     <ContentArea>
       <InformationWrapper>
         <AverageAirTempWrapper>
-          <AverageAirTemp />
+          <AverageAirTemp weatherData={weatherData} />
         </AverageAirTempWrapper>
         <ChartWrapper>
-           <FDDChart />
+           <FDDChart weatherData={weatherData} />
         </ChartWrapper>
-       
         <PieChartWrapper>
             <IceChart />
         </PieChartWrapper>
       </InformationWrapper>
-      <ContentWrapper>
-        <WeatherStatistics />
-      </ContentWrapper>
+      <MainInformationWrapper>
+        <SubSmallContentWrapper>
+          <SeeSurfaceTempWrapper>
+            <SeeSurfaceTemp weatherData={weatherData} />
+          </SeeSurfaceTempWrapper>
+          <SeeSurfaceTempWrapper>
+            <Preciptation weatherData={weatherData} />
+          </SeeSurfaceTempWrapper>
+          <SeeSurfaceTempWrapper>
+            <SolarRadiation weatherData={weatherData} />
+          </SeeSurfaceTempWrapper>
+        </SubSmallContentWrapper>
+        <SubMeduimContentWrapper>
+          <TempLineChartWrapper>
+            <TempLineChart weatherData={weatherData} />
+          </TempLineChartWrapper>
+          <TempLineChartWrapper>
+            <WindSpeedBarChart weatherData={weatherData} />
+          </TempLineChartWrapper>
+        </SubMeduimContentWrapper>
+        <SubBigContentWrapper>
+          <HistBarChartWrapper>
+            <HistBarChart />
+          </HistBarChartWrapper>
+          <HistBarChartWrapper>
+            <TotalIceBreakdownBarChart />
+          </HistBarChartWrapper>
+        </SubBigContentWrapper>
+      </MainInformationWrapper>
     </ContentArea>
     </>
   )
